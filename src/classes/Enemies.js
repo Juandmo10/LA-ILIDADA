@@ -1,8 +1,8 @@
 import { canvas, globals, ESTADOS, loadImageWithoutBg } from '../utils/globals.js';
 import { particleSystem } from '../systems/Particles.js';
 
-const imgSoldier = loadImageWithoutBg('/assets/soldier.png');
-const imgHector = loadImageWithoutBg('/assets/hector.png');
+const imgSoldier = loadImageWithoutBg('./assets/soldier.png');
+const imgHector = loadImageWithoutBg('./assets/hector.png');
 
 export class EnemigoBase {
     constructor(velMultiplicador = 1) {

@@ -21,9 +21,9 @@ const fuegoStatus = document.getElementById('fuego-status');
 const loreContent = document.getElementById('lore-content');
 
 // --- ASSETS ---
-const imgBackgroundCosta = new Image(); imgBackgroundCosta.src = '/assets/bg.png';
-const imgBackgroundRuins = new Image(); imgBackgroundRuins.src = '/assets/ruins.png';
-const imgBackgroundArena = new Image(); imgBackgroundArena.src = '/assets/arena.png';
+const imgBackgroundCosta = new Image(); imgBackgroundCosta.src = './assets/bg.png';
+const imgBackgroundRuins = new Image(); imgBackgroundRuins.src = './assets/ruins.png';
+const imgBackgroundArena = new Image(); imgBackgroundArena.src = './assets/arena.png';
 
 let ultimaTeclaEnter = false;
 let introScrollY = 0;
@@ -47,7 +47,7 @@ function updateUI() {
         heartsContainer.innerHTML = '';
         for(let i=0; i<globals.jugador.vidas; i++) {
             let img = document.createElement('img');
-            img.src = '/assets/heart.png';
+            img.src = './assets/heart.png';
             heartsContainer.appendChild(img);
         }
 

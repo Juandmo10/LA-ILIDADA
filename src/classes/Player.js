@@ -3,7 +3,7 @@ import { Proyectil } from './Projectiles.js';
 import { particleSystem } from '../systems/Particles.js';
 import { playHit, playShoot, playJump } from '../systems/Audio.js';
 
-const imgAquiles = loadImageWithoutBg('/assets/achilles.png');
+const imgAquiles = loadImageWithoutBg('./assets/achilles.png');
 
 export class Player {
     constructor() {
