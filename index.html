@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>La Ilíada - Final Edition</title>
+  <script type="module" crossorigin src="/LA-ILIDADA/assets/index-CgHyVJlX.js"></script>
+  <link rel="stylesheet" crossorigin href="/LA-ILIDADA/assets/index-BSX97pnw.css">
+</head>
+<body>
+
+    <canvas id="gameCanvas"></canvas>
+
+    <div id="ui-layer">
+        <button id="btnFullscreen" class="btn">PANTALLA COMPLETA</button>
+
+        <!-- HUD: Visible solo durante JUEGO_PRINCIPAL -->
+        <div id="hud" class="hud hidden">
+            <div id="hearts-container" class="hud-item"></div>
+            <div id="center-hud" class="hud-item" style="text-align: center;">
+                <div id="level-progress">Nivel 1 (COSTA) - Progreso: 0/10</div>
+                <div id="boss-hp-wrapper" class="hidden">
+                    <div>¡BATALLA CONTRA HÉCTOR!</div>
+                    <div id="boss-hp-container"><div id="boss-hp-fill"></div></div>
+                </div>
+            </div>
+            <div id="powers-hud" class="hud-item" style="text-align: right; line-height: 1.5;">
+                <div id="fuego-status" style="color: #FF4500;">Fuego [F]: LISTO</div>
+                <div id="dash-status" style="color: #87CEEB;">Dash [SHIFT]: LISTO</div>
+                <div id="rayo-status" style="color: #FFD700;">Rayo [E]: LISTO</div>
+            </div>
+        </div>
+
+        <!-- Pantalla de Inicio -->
+        <div id="screen-inicio" class="menu-screen">
+            <h1 class="title">LA ILÍADA</h1>
+            <p>Presiona <span style="color:#D4AF37;">ENTER</span> para iniciar</p>
+        </div>
+
+        <!-- Pantalla Lore -->
+        <div id="screen-lore" class="menu-screen hidden" style="background: black; justify-content: flex-end; overflow: hidden;">
+            <div id="lore-content" class="lore-text" style="position: absolute; top: 100%; width: 800px; padding-bottom: 200px;">
+                Canta, oh musa, la cólera del pélida Aquiles...<br><br>
+                La guerra de Troya ha cobrado incontables vidas.<br>
+                Tras la muerte de su amado compañero Patroclo,<br>
+                Aquiles jura una venganza implacable.<br><br>
+                Su destino lo llama a las murallas de Troya,<br>
+                donde Héctor, el campeón troyano, lo espera.<br><br>
+                La sangre teñirá las arenas.
+            </div>
+            <p style="margin-bottom: 30px; font-size: 14px; color: gray;">Presiona ENTER para saltar</p>
+        </div>
+
+        <!-- Pantalla Selección -->
+        <div id="screen-seleccion" class="menu-screen hidden">
+            <h2 style="color: #D4AF37; margin-bottom: 40px;">SELECCIONA TU ESCENARIO</h2>
+            <button class="btn scenario-btn costa" data-esc="1">[1] COSTA (Día - Lento)</button>
+            <button class="btn scenario-btn ruinas" data-esc="2">[2] RUINAS (Atardecer - Medio)</button>
+            <button class="btn scenario-btn arena" data-esc="3">[3] ARENA NOCTURNA (Noche - Rápido)</button>
+        </div>
+
+        <!-- Pantalla Game Over -->
+        <div id="screen-gameover" class="menu-screen hidden">
+            <h1 style="color: red; font-size: 60px;">GAME OVER</h1>
+            <p style="margin-bottom: 40px;">El héroe ha caído frente a Troya.</p>
+            <button id="btn-restart-go" class="btn">Volver al Inicio (ENTER)</button>
+        </div>
+
+        <!-- Pantalla Victoria -->
+        <div id="screen-victoria" class="menu-screen hidden">
+            <h1 style="color: #D4AF37; font-size: 60px;">¡VICTORIA!</h1>
+            <p style="line-height: 1.5; margin-bottom: 40px;">Héctor ha muerto.<br>La venganza de Aquiles ha sido consumada.</p>
+            <button id="btn-restart-vic" class="btn">Volver al Inicio (ENTER)</button>
+        </div>
+    </div>
+
+</body>
+</html>
