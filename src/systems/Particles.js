@@ -52,6 +52,11 @@ export class ParticleSystem {
     draw(ctx) {
         this.particles.forEach(p => p.draw(ctx));
     }
+
+    /** Limpia efectos (p. ej. al entrar en PvP desde historia). */
+    clear() {
+        this.particles.length = 0;
+    }
 }
 
 export const particleSystem = new ParticleSystem();

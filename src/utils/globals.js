@@ -14,23 +14,57 @@ export const globals = {
     enemigosGenerados: 0,
     enemigosMuertos: 0,
     enemigosTotalNivel: 5,
-    bossActivo: false
+    bossActivo: false,
+    // PvP
+    modoPvP: false,
+    jugador2: null,
 };
 
 export const ESTADOS = {
     PANTALLA_INICIO: 0,
     PANTALLA_LORE: 1,
+    SELECCION_MODO: 6,        // Nuevo: Elegir Historia o PvP
     SELECCION_ESCENARIO: 2,
+    CONTROLES_PVP: 7,         // Nuevo: Mostrar controles PvP
     JUEGO_PRINCIPAL: 3,
+    JUEGO_PVP: 8,             // Nuevo: Bucle de juego PvP
     GAME_OVER: 4,
-    VICTORIA: 5
+    VICTORIA: 5,
+    VICTORIA_PVP: 9,          // Nuevo: Victoria en PvP
 };
 
+// Teclas Jugador 1 (Historia): flechas/WASD + Space + F + E + Shift
+// Teclas Jugador 2 PvP: Arrow keys + L (ataque) + K (disparo) + ; (dash)
+// Ambos conjuntos registrados globalmente
 export const teclas = {
-    ArrowLeft: false, ArrowRight: false, ArrowUp: false,
-    w: false, a: false, d: false,
-    ' ': false, f: false, e: false, Enter: false, Shift: false,
-    1: false, 2: false, 3: false
+    // Jugador 1 (historia + PvP)
+    ArrowLeft: false, ArrowRight: false, ArrowUp: false, ArrowDown: false,
+    w: false, a: false, d: false, s: false,
+    ' ': false, f: false, e: false, Shift: false,
+    Enter: false,
+    // Jugador 2 (PvP)
+    l: false, k: false, ';': false,
+    // Shared
+    '1': false, '2': false, '3': false
+};
+
+// Mapas de teclas para PvP
+export const PVP_KEYS_P1 = {
+    left:   'a',
+    right:  'd',
+    up:     'w',
+    attack: ' ',      // Espacio
+    shoot:  'f',
+    dash:   'Shift',
+};
+
+export const PVP_KEYS_P2 = {
+    left:   'ArrowLeft',
+    right:  'ArrowRight',
+    up:     'ArrowUp',
+    attack: 'l',
+    shoot:  'k',
+    dash:   ';',
 };
 
 export function checkColision(rect1, rect2) {
