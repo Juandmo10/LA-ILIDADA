@@ -1,22 +1,59 @@
-import { canvas, globals, ESTADOS, loadImageWithoutBg } from '../utils/globals.js';
+import { canvas, globals, loadImageWithoutBg } from '../utils/globals.js';
 import { Proyectil } from './Projectiles.js';
 import { particleSystem } from '../systems/Particles.js';
 import { playHit, playShoot, playJump } from '../systems/Audio.js';
 
 const imgAquiles = loadImageWithoutBg('./assets/achilles.png');
-const imgHector  = loadImageWithoutBg('./assets/hector.png');
+const imgHector = loadImageWithoutBg('./assets/hector.png');
+
+/**
+ * Orientación en el PNG del proyecto:
+ * - achilles: mira a la derecha en el archivo → espejo cuando mira a la izquierda (direccion -1).
+ * - hector: mira a la izquierda en el archivo (mismo criterio que el Boss en historia) → espejo cuando mira a la derecha (direccion 1).
+ */
+function debeEspejarSpritePvP(sprite, direccion) {
+    if (sprite === 'hector') return direccion === 1;
+    return direccion === -1;
+}
+
+/** Hitbox PvP: el borde inferior es el “suelo” del personaje. */
+const PVP_HITBOX_H = 60;
+/** Corrección si el PNG deja aire bajo los pies (baja el dibujo hacia el suelo del canvas). */
+const PVP_PIES_SUELO = 14;
+
+function obtenerSpritePvP(sprite) {
+    if (sprite === 'hector') {
+        const drawW = 160;
+        const drawH = 160;
+        return {
+            img: imgHector,
+            drawW,
+            drawH,
+            offsetX: -40,
+            offsetY: PVP_HITBOX_H - drawH + PVP_PIES_SUELO,
+        };
+    }
+    const drawW = 100;
+    const drawH = 100;
+    return {
+        img: imgAquiles,
+        drawW,
+        drawH,
+        offsetX: -30,
+        offsetY: PVP_HITBOX_H - drawH + PVP_PIES_SUELO,
+    };
+}
 
 export class PlayerPvP {
     /**
      * @param {object} opts
-     * @param {number} opts.startX  - posición inicial X
-     * @param {number} opts.dir     - dirección inicial (1 = derecha, -1 = izquierda)
+     * @param {number} opts.startX
+     * @param {number} opts.dir     - 1 = derecha, -1 = izquierda
      * @param {string} opts.sprite  - 'achilles' | 'hector'
-     * @param {object} opts.keys    - mapa de acciones a teclas
-     *   { left, right, up, attack, shoot, dash }
-     * @param {string} opts.color   - color de la barra de vida / HUD
-     * @param {string} opts.name    - nombre del jugador
-     * @param {number} opts.playerIndex - 0 o 1
+     * @param {object} opts.keys
+     * @param {string} opts.color
+     * @param {string} opts.name
+     * @param {number} opts.playerIndex
      */
     constructor(opts) {
         this.w = 40;
@@ -52,11 +89,9 @@ export class PlayerPvP {
         this.dashTimer = 0;
         this.cooldownDash = 0;
 
-        // Teclas anteriores (para detectar flancos)
         this._prevKeys = {};
         for (const k of Object.values(opts.keys)) this._prevKeys[k] = false;
 
-        // Proyectiles propios
         this.proyectiles = [];
     }
 
@@ -120,7 +155,6 @@ export class PlayerPvP {
             this.enSuelo = false;
         }
 
-        // Mirar al rival cuando no hay movimiento horizontal (antes de ataque/disparo para que apunten bien).
         if (otroJugador && this.vx === 0 && !this.isDashing) {
             this.direccion = otroJugador.x > this.x ? 1 : -1;
         }
@@ -130,7 +164,6 @@ export class PlayerPvP {
             if (this.timerInvulnerable <= 0) this.invulnerable = false;
         }
 
-        // Ataque melee
         if (this.cooldownAtaque > 0) this.cooldownAtaque--;
         if (this.atacando) {
             this.timerAtaque--;
@@ -142,7 +175,6 @@ export class PlayerPvP {
             playHit();
         }
 
-        // Disparo
         if (this.cooldownEspecial > 0) this.cooldownEspecial--;
         if (this._justPressed('shoot', teclas) && this.cooldownEspecial <= 0) {
             this.proyectiles.push(new Proyectil(
@@ -154,7 +186,6 @@ export class PlayerPvP {
             this.cooldownEspecial = this.maxCooldownEspecial;
         }
 
-        // Actualizar proyectiles propios
         for (let i = this.proyectiles.length - 1; i >= 0; i--) {
             this.proyectiles[i].actualizar();
             particleSystem.addFire(this.proyectiles[i].x, this.proyectiles[i].y);
@@ -167,14 +198,11 @@ export class PlayerPvP {
     dibujar(ctx) {
         if (this.invulnerable && Math.floor(Date.now() / 100) % 2 === 0) return;
 
-        const img = this.sprite === 'hector' ? imgHector : imgAquiles;
+        const { img, drawW, drawH, offsetX, offsetY } = obtenerSpritePvP(this.sprite);
+
         ctx.save();
-        if (img.complete && img.naturalWidth > 0) {
-            let drawW = this.sprite === 'hector' ? 160 : 100;
-            let drawH = this.sprite === 'hector' ? 160 : 100;
-            let offsetX = this.sprite === 'hector' ? -40 : -30;
-            let offsetY = this.sprite === 'hector' ? -60 : -40;
-            if (this.direccion === -1) {
+        if (img.complete && img.width > 0 && img.height > 0) {
+            if (debeEspejarSpritePvP(this.sprite, this.direccion)) {
                 ctx.translate(this.x + this.w, this.y);
                 ctx.scale(-1, 1);
                 ctx.drawImage(img, offsetX, offsetY, drawW, drawH);
@@ -189,9 +217,11 @@ export class PlayerPvP {
         ctx.restore();
 
         if (this.atacando) {
-            ctx.fillStyle = this.sprite === 'hector' ? 'rgba(180,50,255,0.5)' : 'rgba(255,255,255,0.6)';
+            ctx.fillStyle = this.sprite === 'hector'
+                ? 'rgba(180, 50, 255, 0.45)'
+                : 'rgba(255, 255, 255, 0.6)';
             ctx.beginPath();
-            let radio = 50;
+            const radio = 50;
             if (this.direccion === 1) {
                 ctx.arc(this.x + this.w, this.y + this.h / 2, radio, -Math.PI / 2, Math.PI / 2);
             } else {
@@ -200,19 +230,24 @@ export class PlayerPvP {
             ctx.fill();
         }
 
-        // Dibujar proyectiles propios
         for (const p of this.proyectiles) {
             p.dibujar(ctx);
         }
 
-        // Etiqueta sobre la cabeza
         ctx.save();
         ctx.font = '10px "Press Start 2P", monospace';
         ctx.fillStyle = this.color;
         ctx.textAlign = 'center';
+        ctx.textBaseline = 'bottom';
         ctx.shadowColor = '#000';
         ctx.shadowBlur = 4;
-        ctx.fillText(this.name, this.x + this.w / 2, this.y - 8);
+        // Centro horizontal del sprite en pantalla (corrige espejo respecto al borde derecho del hitbox).
+        const cx = this.x + offsetX + drawW / 2;
+        const nameX = debeEspejarSpritePvP(this.sprite, this.direccion)
+            ? 2 * (this.x + this.w) - cx
+            : cx;
+        const nameY = this.y + offsetY - 10;
+        ctx.fillText(this.name, nameX, nameY);
         ctx.restore();
     }
 
@@ -226,13 +261,17 @@ export class PlayerPvP {
         };
     }
 
+    /**
+     * @param {number} direccionEmpuje -1 empuja a la izquierda, +1 a la derecha
+     */
     recibirDano(direccionEmpuje) {
         if (this.invulnerable || this.isDashing) return;
         this.vidas--;
         this.invulnerable = true;
         this.timerInvulnerable = 80;
         this.vy = -6;
-        this.vx = direccionEmpuje * 12;
+        const d = direccionEmpuje === 0 ? 1 : Math.sign(direccionEmpuje);
+        this.vx = d * 12;
         this.x += this.vx;
         particleSystem.addBlood(this.x + this.w / 2, this.y + this.h / 2);
     }

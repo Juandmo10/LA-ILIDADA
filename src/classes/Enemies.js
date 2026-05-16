@@ -1,4 +1,4 @@
-import { canvas, globals, ESTADOS, loadImageWithoutBg } from '../utils/globals.js';
+import { canvas, globals, loadImageWithoutBg } from '../utils/globals.js';
 import { particleSystem } from '../systems/Particles.js';
 
 const imgSoldier = loadImageWithoutBg('./assets/soldier.png');
@@ -51,9 +51,12 @@ export class Boss {
         this.invulnerable = false;
         this.timerInvulnerable = 0;
         this.direccion = -1; // -1 = Izquierda, 1 = Derecha
+        /** Último golpe: la escena principal decide victoria / epílogo. */
+        this.derrotado = false;
     }
 
     actualizar(jugadorX) {
+        if (this.derrotado) return;
         if (this.invulnerable) {
             this.timerInvulnerable--;
             if (this.timerInvulnerable <= 0) this.invulnerable = false;
@@ -91,11 +94,16 @@ export class Boss {
     }
 
     dibujar(ctx) {
+        if (this.derrotado) return;
         if (this.invulnerable && Math.floor(Date.now() / 100) % 2 === 0) return; 
 
         ctx.save();
-        if (imgHector.complete && imgHector.naturalWidth > 0) {
-            let drawW = 160, drawH = 160, offsetX = -40, offsetY = -60;
+        if (imgHector.complete && imgHector.width > 0 && imgHector.height > 0) {
+            const drawW = 160;
+            const drawH = 160;
+            const offsetX = -40;
+            const offsetY = -60;
+            // hector.png en el proyecto mira a la izquierda; espejar al avanzar hacia la derecha (direccion 1).
             if (this.direccion === 1) {
                 ctx.translate(this.x + this.w, this.y);
                 ctx.scale(-1, 1);
@@ -123,7 +131,7 @@ export class Boss {
     }
 
     getHitboxAtaque() {
-        if (!this.atacando) return null;
+        if (this.derrotado || !this.atacando) return null;
         let hitW = 180;
         let hitH = 40;
         return {
@@ -135,11 +143,11 @@ export class Boss {
     }
 
     recibirDano() {
-        if (this.invulnerable) return;
+        if (this.invulnerable || this.derrotado) return;
         this.vidas--;
         this.invulnerable = true;
         this.timerInvulnerable = 15; 
         particleSystem.addBlood(this.x + this.w/2, this.y + this.h/2);
-        if (this.vidas <= 0) globals.estadoActual = ESTADOS.VICTORIA;
+        if (this.vidas <= 0) this.derrotado = true;
     }
 }

@@ -36,29 +36,34 @@
         <!-- HUD PvP                                -->
         <!-- ══════════════════════════════════════ -->
         <div id="hud-pvp" class="hud-pvp hidden">
-            <!-- Jugador 1: Aquiles -->
+            <!-- Jugador 1: Héctor (izquierda) -->
             <div class="pvp-hud-panel pvp-p1">
-                <div class="pvp-player-name" style="color:#D4AF37;">⚔ AQUILES</div>
+                <div class="pvp-player-name" style="color:#8A2BE2;">⚔ HÉCTOR</div>
                 <div class="pvp-bar-container">
-                    <div id="pvp-p1-bar-fill" class="pvp-bar-fill p1-bar"></div>
+                    <div id="pvp-p1-bar-fill" class="pvp-bar-fill p2-bar"></div>
                 </div>
                 <div class="pvp-skills">
-                    <span id="pvp-p1-shoot" style="color:#FF4500;">🔥 LISTO</span>
+                    <span id="pvp-p1-shoot" style="color:#8A2BE2;">🔥 LISTO</span>
                     <span id="pvp-p1-dash"  style="color:#87CEEB;">💨 LISTO</span>
                 </div>
             </div>
 
-            <!-- VS central -->
-            <div class="pvp-vs-label">VS</div>
+            <!-- Centro: rondas + tiempo -->
+            <div class="pvp-hud-center">
+                <div id="pvp-rounds-text" class="pvp-meta">Rondas 0 — 0</div>
+                <div class="pvp-vs-label">VS</div>
+                <div id="pvp-timer-text" class="pvp-meta pvp-timer">Tiempo 3:00</div>
+                <div class="pvp-meta-hint">Mejor de 3 rondas · 3 min por ronda</div>
+            </div>
 
-            <!-- Jugador 2: Héctor -->
+            <!-- Jugador 2: Aquiles (derecha, espejado para mirar al rival) -->
             <div class="pvp-hud-panel pvp-p2">
-                <div class="pvp-player-name" style="color:#8A2BE2;">⚔ HÉCTOR</div>
+                <div class="pvp-player-name" style="color:#D4AF37;">⚔ AQUILES</div>
                 <div class="pvp-bar-container">
-                    <div id="pvp-p2-bar-fill" class="pvp-bar-fill p2-bar"></div>
+                    <div id="pvp-p2-bar-fill" class="pvp-bar-fill p1-bar"></div>
                 </div>
                 <div class="pvp-skills">
-                    <span id="pvp-p2-shoot" style="color:#8A2BE2;">🔥 LISTO</span>
+                    <span id="pvp-p2-shoot" style="color:#FF4500;">🔥 LISTO</span>
                     <span id="pvp-p2-dash"  style="color:#87CEEB;">💨 LISTO</span>
                 </div>
             </div>
@@ -77,13 +82,18 @@
         <!-- ══════════════════════════════════════ -->
         <div id="screen-lore" class="menu-screen hidden" style="background:black;justify-content:flex-end;overflow:hidden;">
             <div id="lore-content" class="lore-text" style="position:absolute;top:100%;width:800px;padding-bottom:200px;">
-                Canta, oh musa, la cólera del pélida Aquiles...<br><br>
-                La guerra de Troya ha cobrado incontables vidas.<br>
-                Tras la muerte de su amado compañero Patroclo,<br>
-                Aquiles jura una venganza implacable.<br><br>
-                Su destino lo llama a las murallas de Troya,<br>
-                donde Héctor, el campeón troyano, lo espera.<br><br>
-                La sangre teñirá las arenas.
+                Canta, oh musa, la cólera del pélida Aquiles…<br><br>
+                Nueve años bajo los muros de Ilión. Nueve años de bronce, sudor y juramentos rotos.<br>
+                Aquiles, el más veloz de los aqueos, guarda en el pecho un fuego que no apaga el vino:<br>
+                la afrenta del rey Agamenón, que arrastra a Briseida como un trofeo más del campamento.<br><br>
+                Entonces Aquiles retira su furia del campo. Los mirmidones observan en silencio<br>
+                mientras los troyanos, alentados, vuelven a oler la victoria.<br><br>
+                En medio del caos brilla Patroclo, su sombra leal, que enfundará la armadura del héroe<br>
+                para salvar a los griegos… y desatar el trueno que ya no podrá recoger nadie.<br><br>
+                Y al fin, frente a las puertas, Héctor —pastor de hombres— sostiene a Troya con un solo nombre.<br>
+                Andrómaca lo mira desde las almenas; Príamo envejece en cada amanecer de guerra.<br><br>
+                Tú caminarás esas orillas como el verso más afilado del poema:<br>
+                la cólera que canta el destino… y el duelo que lo cumple.
             </div>
             <p style="margin-bottom:30px;font-size:14px;color:gray;">Presiona ENTER para saltar</p>
         </div>
@@ -99,9 +109,10 @@
                     <div class="mode-card-icon">⚔️</div>
                     <h3 class="mode-card-title" style="color:#D4AF37;">MODO HISTORIA</h3>
                     <p class="mode-card-desc">
-                        Juega como Aquiles.<br>
-                        Derrota a los soldados de Troya<br>
-                        y enfrenta a Héctor en épica batalla.
+                        Campaña épica con diálogos:<br>
+                        Agamenón, Briseida, Patroclo, Héctor…<br>
+                        Viñetas antes y después del combate.<br>
+                        Derrota oleadas y el duelo final.
                     </p>
                     <div class="mode-card-controls">
                         <span class="ctrl-badge">WASD / ↑←↓→</span>
@@ -119,12 +130,13 @@
                     <h3 class="mode-card-title" style="color:#8A2BE2;">MODO PvP</h3>
                     <p class="mode-card-desc">
                         ¡Dos guerreros, un campo de batalla!<br>
-                        Aquiles vs Héctor.<br>
-                        Combate local cara a cara.
+                        Héctor (izquierda) vs Aquiles (derecha).<br>
+                        Mejor de 3 rondas, 3 min por ronda.<br>
+                        Sacudida de cámara y combate refinado.
                     </p>
                     <div class="mode-card-controls pvp-preview">
                         <div class="pvp-preview-player">
-                            <span style="color:#D4AF37;font-size:11px;">AQUILES (J1)</span><br>
+                            <span style="color:#8A2BE2;font-size:11px;">HÉCTOR (J1)</span><br>
                             <span class="ctrl-badge-sm">WASD Moverse</span>
                             <span class="ctrl-badge-sm">ESPACIO Atacar</span>
                             <span class="ctrl-badge-sm">F Fuego</span>
@@ -132,7 +144,7 @@
                         </div>
                         <div class="pvp-preview-sep">VS</div>
                         <div class="pvp-preview-player">
-                            <span style="color:#8A2BE2;font-size:11px;">HÉCTOR (J2)</span><br>
+                            <span style="color:#D4AF37;font-size:11px;">AQUILES (J2)</span><br>
                             <span class="ctrl-badge-sm">↑←↓→ Moverse</span>
                             <span class="ctrl-badge-sm">L Atacar</span>
                             <span class="ctrl-badge-sm">K Fuego</span>
@@ -175,9 +187,9 @@
             <h2 class="subtitle-gold" style="margin-bottom:30px;">⚔ CONTROLES PvP ⚔</h2>
             <div class="controles-pvp-grid">
                 <!-- Jugador 1 -->
-                <div class="controles-card p1-card">
+                <div class="controles-card p2-card">
                     <div class="controles-avatar">🗡️</div>
-                    <h3 style="color:#D4AF37;margin:10px 0;">JUGADOR 1<br><span style="color:#fff;font-size:12px;">AQUILES</span></h3>
+                    <h3 style="color:#8A2BE2;margin:10px 0;">JUGADOR 1<br><span style="color:#fff;font-size:12px;">HÉCTOR</span></h3>
                     <table class="ctrl-table">
                         <tr><td class="ctrl-key">A / D</td><td class="ctrl-action">Moverse</td></tr>
                         <tr><td class="ctrl-key">W</td><td class="ctrl-action">Saltar</td></tr>
@@ -194,9 +206,9 @@
                 </div>
 
                 <!-- Jugador 2 -->
-                <div class="controles-card p2-card">
+                <div class="controles-card p1-card">
                     <div class="controles-avatar">🛡️</div>
-                    <h3 style="color:#8A2BE2;margin:10px 0;">JUGADOR 2<br><span style="color:#fff;font-size:12px;">HÉCTOR</span></h3>
+                    <h3 style="color:#D4AF37;margin:10px 0;">JUGADOR 2<br><span style="color:#fff;font-size:12px;">AQUILES</span></h3>
                     <table class="ctrl-table">
                         <tr><td class="ctrl-key">← / →</td><td class="ctrl-action">Moverse</td></tr>
                         <tr><td class="ctrl-key">↑</td><td class="ctrl-action">Saltar</td></tr>
@@ -209,6 +221,18 @@
             <button id="btn-iniciar-pvp" class="btn pvp-btn" style="margin-top:40px;font-size:14px;padding:18px 40px;">
                 ⚔ ¡COMENZAR BATALLA!
             </button>
+        </div>
+
+        <!-- ══════════════════════════════════════ -->
+        <!-- Campaña: diálogos in-game               -->
+        <!-- ══════════════════════════════════════ -->
+        <div id="screen-historia-dialogo" class="menu-screen dialog-screen hidden">
+            <div class="dialog-panel">
+                <p class="dialog-label">LA ILÍADA</p>
+                <h2 id="dialog-speaker" class="dialog-speaker">Narrador</h2>
+                <p id="dialog-text" class="dialog-body"></p>
+                <button type="button" id="btn-dialog-advance" class="btn dialog-btn">Continuar (ENTER)</button>
+            </div>
         </div>
 
         <!-- ══════════════════════════════════════ -->
@@ -235,7 +259,7 @@
         <div id="screen-victoria-pvp" class="menu-screen hidden">
             <div class="pvp-victory-glow"></div>
             <h1 class="pvp-victory-title">¡VICTORIA!</h1>
-            <p id="pvp-winner-text" class="pvp-winner-text">¡AQUILES GANA!</p>
+            <p id="pvp-winner-text" class="pvp-winner-text">¡HÉCTOR GANA!</p>
             <p style="margin:10px 0 40px;font-size:12px;color:#aaa;">La batalla ha terminado.</p>
             <button id="btn-restart-pvp-vic" class="btn">Volver al Inicio (ENTER)</button>
         </div>

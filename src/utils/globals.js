@@ -18,6 +18,26 @@ export const globals = {
     // PvP
     modoPvP: false,
     jugador2: null,
+    /** Campaña con diálogos (solo modo historia). */
+    historiaNarrada: false,
+    /** Sacudida de cámara (frames restantes). */
+    screenShake: 0,
+    /** Rondas ganadas en PvP (mejor de N). */
+    pvpRoundsP1: 0,
+    pvpRoundsP2: 0,
+    pvpRoundsToWin: 2,
+    /** Fin de partida por tiempo (timestamp ms). 0 = sin límite. */
+    pvpMatchEndTime: 0,
+    /** Pausa breve entre rondas (frames). */
+    pvpBetweenRounds: 0,
+    /** Texto breve entre rondas. */
+    pvpRoundBanner: '',
+    /** Tras diálogo previo al jefe. */
+    preBossDialogoVisto: false,
+    /** Evita lanzar dos veces el diálogo pre-jefe. */
+    preBossDialogIniciado: false,
+    /** Epílogo ya encolado al derrotar al jefe. */
+    bossEpilogueTriggered: false,
 };
 
 export const ESTADOS = {
@@ -31,6 +51,7 @@ export const ESTADOS = {
     GAME_OVER: 4,
     VICTORIA: 5,
     VICTORIA_PVP: 9,          // Nuevo: Victoria en PvP
+    HISTORIA_DIALOGO: 10,     // Campaña: viñetas con diálogo
 };
 
 // Teclas Jugador 1 (Historia): flechas/WASD + Space + F + E + Shift
@@ -103,6 +124,7 @@ export function loadImageWithoutBg(src) {
         tCtx.putImageData(imgData, 0, 0);
         resultCanvas.complete = true;
         resultCanvas.naturalWidth = img.width;
+        resultCanvas.naturalHeight = img.height;
     };
     return resultCanvas;
 }

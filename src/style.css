@@ -87,10 +87,37 @@ canvas {
     display: flex;
     justify-content: space-between;
     align-items: flex-start;
-    padding: 12px 30px;
+    gap: 12px;
+    padding: 12px 24px;
     background: linear-gradient(to bottom, rgba(0,0,0,0.75) 0%, transparent 100%);
     pointer-events: none;
 }
+
+.pvp-hud-center {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: flex-start;
+    gap: 6px;
+    min-width: 0;
+    padding-top: 4px;
+}
+.pvp-meta {
+    font-family: 'Press Start 2P', monospace;
+    font-size: 8px;
+    color: #ccc;
+    text-shadow: 1px 1px 0 #000;
+    text-align: center;
+}
+.pvp-meta-hint {
+    font-size: 6px;
+    color: #666;
+    text-align: center;
+    max-width: 220px;
+    line-height: 1.6;
+}
+.pvp-timer { letter-spacing: 1px; }
 
 .pvp-hud-panel {
     display: flex;
@@ -127,10 +154,10 @@ canvas {
 
 .pvp-vs-label {
     font-family: 'Cinzel', serif;
-    font-size: 32px;
+    font-size: 26px;
     color: #D4AF37;
     text-shadow: 0 0 15px rgba(212,175,55,0.8);
-    align-self: center;
+    line-height: 1;
 }
 
 /* ═══════════════════════════════════════════════
@@ -439,4 +466,46 @@ canvas {
 #btnFullscreen:hover {
     background: rgba(212, 175, 55, 1);
     color: #000;
+}
+
+/* ═══════════════════════════════════════════════
+   DIÁLOGOS CAMPAÑA
+═══════════════════════════════════════════════ */
+.dialog-screen {
+    background: rgba(5, 5, 10, 0.94) !important;
+    backdrop-filter: blur(4px);
+}
+.dialog-panel {
+    max-width: 720px;
+    padding: 36px 40px 28px;
+    border: 2px solid rgba(212, 175, 55, 0.45);
+    background: linear-gradient(160deg, rgba(25, 20, 12, 0.98) 0%, rgba(8, 8, 14, 0.99) 100%);
+    box-shadow: 0 0 40px rgba(0, 0, 0, 0.6), inset 0 0 60px rgba(212, 175, 55, 0.04);
+}
+.dialog-label {
+    font-family: 'Cinzel', serif;
+    font-size: 11px;
+    letter-spacing: 0.35em;
+    color: #8a7a60;
+    margin: 0 0 16px;
+}
+.dialog-speaker {
+    font-family: 'Cinzel', serif;
+    font-size: 22px;
+    margin: 0 0 20px;
+    font-weight: 700;
+    text-shadow: 0 0 12px rgba(212, 175, 55, 0.25);
+}
+.dialog-body {
+    font-family: 'Cinzel', serif;
+    font-size: 17px;
+    line-height: 1.75;
+    color: #e8e4dc;
+    text-align: left;
+    margin: 0 0 28px;
+    min-height: 4.5em;
+}
+.dialog-btn {
+    font-size: 10px;
+    pointer-events: auto;
 }
